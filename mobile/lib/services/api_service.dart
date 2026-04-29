@@ -5,8 +5,8 @@ import 'package:http/http.dart' as http;
 import '../models/estacion.dart';
 
 class ApiService {
-  // 10.0.2.2 es el alias del localhost de la PC para emuladores Android
-  final String baseUrl = "http://10.0.2.2:8000";
+  // Cambia la IP 10.0.2.2 por 127.0.0.1 o localhost
+  final String baseUrl = "http://127.0.0.1:8000";
   Future<List<Estacion>> fetchEstaciones() async {
     final response = await http.get(Uri.parse('$baseUrl/estaciones/'));
     if (response.statusCode == 200) {
