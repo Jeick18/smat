@@ -10,8 +10,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _userController = TextEditingController();
-  final _passController = TextEditingController();
+  final _userController = TextEditingController(text: 'admin');
+  final _passController = TextEditingController(text: 'admin');
   bool _isLoading = false;
   void _handleLogin() async {
     setState(() => _isLoading = true);

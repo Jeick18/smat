@@ -15,6 +15,14 @@ class Estacion(EstacionBase):
     class Config:
         from_attributes = True
 
+
+class EstacionConLectura(EstacionBase):
+    id: int
+    ultima_lectura: Optional[float] = None
+
+    class Config:
+        from_attributes = True
+
 class LecturaBase(BaseModel):
     valor: float
     estacion_id: int

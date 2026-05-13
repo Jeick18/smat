@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'screens/home_page.dart';
+import 'screens/login_screen.dart';
 
 void main() => runApp(const SMATApp());
 
@@ -9,7 +9,7 @@ class SMATApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: HomePage(),
+      home: LoginScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
