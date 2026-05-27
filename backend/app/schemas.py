@@ -2,6 +2,17 @@ from pydantic import BaseModel
 from typing import Optional
 from datetime import datetime
 
+class UsuarioCreate(BaseModel):
+    username: str
+    password: str
+
+class Usuario(BaseModel):
+    id: int
+    username: str
+
+    class Config:
+        from_attributes = True
+
 class EstacionBase(BaseModel):
     nombre: str
     ubicacion: str

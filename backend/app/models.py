@@ -3,6 +3,12 @@ from sqlalchemy.orm import relationship
 from datetime import datetime
 from .database import Base
 
+class UsuarioDB(Base):
+    __tablename__ = "usuarios"
+    id = Column(Integer, primary_key=True, index=True)
+    username = Column(String, unique=True, index=True)
+    password_hash = Column(String)
+
 class EstacionDB(Base):
     __tablename__ = "estaciones"
     id = Column(Integer, primary_key=True, index=True)

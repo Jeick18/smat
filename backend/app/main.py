@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI, Depends, HTTPException, status
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
@@ -20,13 +20,27 @@ app.add_middleware(
     allow_headers=["Authorization", "Content-Type"],
 )
 
+@app.post("/register", status_code=status.HTTP_201_CREATED, tags=["Seguridad"])
+def register(user: schemas.UsuarioCreate, db: Session = Depends(database.get_db)):
+    db_user = db.query(models.UsuarioDB).filter(models.UsuarioDB.username == user.username).first()
+    if db_user:
+        raise HTTPException(status_code=400, detail="El nombre de usuario ya está en uso")
+    
+    hashed_password = auth.obtener_password_hash(user.password)
+    nuevo_usuario = models.UsuarioDB(username=user.username, password_hash=hashed_password)
+    db.add(nuevo_usuario)
+    db.commit()
+    db.refresh(nuevo_usuario)
+    return {"status": "Usuario registrado exitosamente"}
+
 @app.post("/token", tags=["Seguridad"])
-def login(credentials: LoginRequest):
-    if not auth.autenticar_usuario(credentials.username, credentials.password):
+def login(credentials: LoginRequest, db: Session = Depends(database.get_db)):
+    usuario = auth.autenticar_usuario(db, credentials.username, credentials.password)
+    if not usuario:
         raise HTTPException(status_code=401, detail="Credenciales incorrectas")
 
     return {
-        "access_token": auth.crear_token({"sub": credentials.username}),
+        "access_token": auth.crear_token({"sub": usuario.username}),
         "token_type": "bearer",
     }
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../services/auth_service.dart';
 import 'home_page.dart';
+import 'register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -10,8 +11,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _userController = TextEditingController(text: 'admin');
-  final _passController = TextEditingController(text: 'admin');
+  final _userController = TextEditingController();
+  final _passController = TextEditingController();
   bool _isLoading = false;
   void _handleLogin() async {
     setState(() => _isLoading = true);
@@ -61,6 +62,18 @@ class _LoginScreenState extends State<LoginScreen> {
                     onPressed: _handleLogin,
                     child: const Text('Iniciar Sesión'),
                   ),
+            const SizedBox(height: 15),
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const RegisterScreen(),
+                  ),
+                );
+              },
+              child: const Text('¿No tienes cuenta? Regístrate aquí'),
+            ),
           ],
         ),
       ),
