@@ -49,7 +49,7 @@ class _HomePageState extends State<HomePage> {
     if (lectura == null) {
       return Colors.indigo;
     }
-    return lectura > 50 ? Colors.red : Colors.green;
+    return lectura > 70 ? Colors.red : Colors.green;
   }
 
   void _mostrarDialogoEdicion(Estacion estacion) {
